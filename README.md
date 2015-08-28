@@ -1,11 +1,11 @@
 # sass-jspm-importer
 This package provides a [sass importer](https://github.com/sass/node-sass#importer--v200---experimental) function that uses [jspm](https://github.com/jspm/jspm-cli/) to resolve paths.
 
-![npm](https://nodei.co/npm/node-sass-jspm-importer.png?downloads=true&downloadRank=true&stars=true)
+[![npm](https://nodei.co/npm/sass-jspm-importer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/sass-jspm-importer/)
 
 
 [![Build Status](https://travis-ci.org/idcware/node-sass-jspm-importer.svg?branch=master&style=flat)](https://travis-ci.org/idcware/node-sass-jspm-importer)
-[![npm version](https://badge.fury.io/js/node-sass-jspm-importer.svg)](http://badge.fury.io/js/node-sass-jspm-importer)
+[![npm version](https://badge.fury.io/js/sass-jspm-importer.svg)](http://badge.fury.io/js/sass-jspm-importer)
 [![Dependency Status](https://david-dm.org/idcware/node-sass-jspm-importer.svg?theme=shields.io)](https://david-dm.org/idcware/node-sass-jspm-importer)
 [![devDependency Status](https://david-dm.org/idcware/node-sass-jspm-importer/dev-status.svg?theme=shields.io)](https://david-dm.org/idcware/node-sass-jspm-importer#info=devDependencies)
 
