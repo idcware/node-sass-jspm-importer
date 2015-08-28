@@ -19,8 +19,7 @@ gulp.task('build-sass', function() {
     return gulp.src('src/sass/*.scss')
         .pipe(sass({
             errLogToConsole: true,
-            includePaths: bourbon.includePaths,
-            functions: sassJspm.resolve_function('/lib/js/'),
+            functions: sassJspm.resolve_function('/lib/'),
             importer: sassJspm.importer
         }))
         .pipe(gulp.dest('dist/css'));
@@ -36,4 +35,4 @@ $fa-font-path: jspm_resolve("font-awesome/fonts/");
 
 // do fun stuff with font-awesome !
 ```
-The `jspm:`:-prefixed imports will be handled by the custom importer.
+The `jspm:`-prefixed imports will be handled by the custom importer.
