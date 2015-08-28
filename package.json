@@ -1,0 +1,26 @@
+{
+  "name": "sass-jspm-importer",
+  "version": "0.0.2",
+  "description": "jspm importer module for node-sass",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idcware/node-sass-jspm-importer.git"
+  },
+  "keywords": [
+    "sass",
+    "jspm"
+  ],
+  "author": "IDCWARE",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "mockery": "^1.4.0",
+    "node-sass": "^3.2.0",
+    "q": "^1.4.1"
+  }
+}
