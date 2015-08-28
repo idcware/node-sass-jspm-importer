@@ -1,3 +1,4 @@
+'use strict';
 
 var mockery = require('mockery');
 var chai = require('chai');
