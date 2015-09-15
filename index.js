@@ -21,11 +21,21 @@ module.exports.importer = function(url, prev, done) {
     url = url.replace(/^jspm:/, '')+'.scss';
 
     jspm.normalize(url).then(function(path) {
+        var stat;
+        var parts;
+
         path = path.replace(/file:\/\/(.*?)(\.js)?$/, '$1');
         try {
-            var stat = fs.statSync(path);
-        } catch(e) {
+          stat = fs.statSync(path);
+        } catch (e) {
+          try {
+            parts = path.split('/');
+            parts[parts.length - 1] = '_' + parts[parts.length - 1];
+            path = parts.join('/');
+            stat = fs.statSync(path);
+          } catch (e) {
             return done();
+          }
         }
         if(stat.isFile()) {
             done({
