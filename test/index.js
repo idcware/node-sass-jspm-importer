@@ -37,6 +37,7 @@ describe('sass-jspm-importer', function() {
         beforeEach(function() {
             // cannot just mock fs since it uses libsass..
             fs.writeFileSync('test/fakefile.scss', '#id{display:block}');
+            fs.writeFileSync('test/_fakepartial.scss', '#id{display:inline}');
         });
         afterEach(function() {
             fs.unlinkSync('test/fakefile.scss');
@@ -50,6 +51,18 @@ describe('sass-jspm-importer', function() {
                 if(err) throw err;
 
                 expect(result.css.toString()).to.equal('#id{display:block}\n');
+                done();
+            });
+        });
+        it('should import partials', function(done) {
+            sass.render({
+                data: '@import "jspm:fakepartial";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:inline}\n');
                 done();
             });
         });
