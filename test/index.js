@@ -41,6 +41,7 @@ describe('sass-jspm-importer', function() {
         });
         afterEach(function() {
             fs.unlinkSync('test/fakefile.scss');
+            fs.unlinkSync('test/_fakepartial.scss');
         });
         it('should import jspm files', function(done) {
             sass.render({
