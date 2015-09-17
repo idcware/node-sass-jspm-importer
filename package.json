@@ -1,6 +1,6 @@
 {
   "name": "sass-jspm-importer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "jspm importer module for node-sass",
   "main": "index.js",
   "scripts": {
