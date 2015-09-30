@@ -28,7 +28,7 @@ describe('sass-jspm-importer', function() {
         mockery.enable({
             warnOnUnregistered: false,
         });
-        sassJspm = require('../index');
+        sassJspm = require('../src/index');
     });
     afterEach(function() {
         mockery.disable();
