@@ -18,16 +18,16 @@ module.exports = function(url, prev, done) {
 
         path = path.replace(/file:\/\/(.*?)(\.js)?$/, '$1');
         try {
-          stat = fs.statSync(path);
-        } catch (e) {
-          try {
-            parts = path.split('/');
-            parts[parts.length - 1] = '_' + parts[parts.length - 1];
-            path = parts.join('/');
             stat = fs.statSync(path);
-          } catch (e) {
-            return done();
-          }
+        } catch (e) {
+            try {
+                parts = path.split('/');
+                parts[parts.length - 1] = '_' + parts[parts.length - 1];
+                path = parts.join('/');
+                stat = fs.statSync(path);
+            } catch (e) {
+                return done();
+            }
         }
         if(stat.isFile()) {
             done({
