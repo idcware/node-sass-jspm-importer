@@ -16,7 +16,7 @@ module.exports = function(url, prev, done) {
         var stat;
         var parts;
 
-        filePath = path.resolve(filePath.replace(/file:\/{2,3}(.*?)(\.js)?$/, '$1'));
+        filePath = path.normalize(filePath).replace(/file:\\?(.*?)(\.js)?$/, '$1');
         try {
             stat = fs.statSync(filePath);
         } catch (e) {
