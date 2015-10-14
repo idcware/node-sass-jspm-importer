@@ -55,9 +55,57 @@ describe('sass-jspm-importer', function() {
                 done();
             });
         });
-        it('should import partials', function(done) {
+        it('should import npm files', function(done) {
+            sass.render({
+                data: '@import "npm:fakefile";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:block}\n');
+                done();
+            });
+        });
+        it('should import github files', function(done) {
+            sass.render({
+                data: '@import "github:fakefile";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:block}\n');
+                done();
+            });
+        });
+        it('should import partials for jspm', function(done) {
             sass.render({
                 data: '@import "jspm:fakepartial";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:inline}\n');
+                done();
+            });
+        });
+        it('should import partials for npm', function(done) {
+            sass.render({
+                data: '@import "npm:fakepartial";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:inline}\n');
+                done();
+            });
+        });
+        it('should import partials for github', function(done) {
+            sass.render({
+                data: '@import "github:fakepartial";',
                 outputStyle: 'compressed',
                 importer: sassJspm.importer
             }, function(err, result) {
