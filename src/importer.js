@@ -7,31 +7,45 @@ var jspm = require('jspm')
 
 
 module.exports = function(url, prev, done) {
-    if(url.substr(0, 5) != 'jspm:')
-        return done(); // bailout
+    var registries = ['jspm', 'npm', 'github'];
+    var urlSplit = url.split(':');
+    var isRegistry = false;
 
-    url = url.replace(/^jspm:/, '')+'.scss';
+    if (urlSplit.length) {
+      var registry = urlSplit[0];
+      for (var i = 0; i < registries.length; i++) {
+        if (registry === registries[i]) {
+          url = url.replace(new RegExp('^' + registry + ':'), '')+'.scss';
+          isRegistry = true;
+          break;
+        }
+      }
+    }
 
-    jspm.normalize(url).then(function(path) {
+    if (!isRegistry) {
+      return done();
+    }
+
+    jspm.normalize(url).then(function(normalizedPath) {
         var stat;
         var parts;
 
-        path = path.replace(/file:\/\/(.*?)(\.js)?$/, '$1');
+        normalizedPath = normalizedPath.replace(/file:\/\/(.*?)(\.js)?$/, '$1');
         try {
-            stat = fs.statSync(path);
+            stat = fs.statSync(normalizedPath);
         } catch (e) {
             try {
-                parts = path.split('/');
+                parts = normalizedPath.split('/');
                 parts[parts.length - 1] = '_' + parts[parts.length - 1];
-                path = parts.join('/');
-                stat = fs.statSync(path);
+                normalizedPath = parts.join('/');
+                stat = fs.statSync(normalizedPath);
             } catch (e) {
                 return done();
             }
         }
         if(stat.isFile()) {
             done({
-                file: path
+                file: normalizedPath
             });
         } else {
             done();
