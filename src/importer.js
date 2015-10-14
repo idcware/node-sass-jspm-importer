@@ -13,25 +13,26 @@ module.exports = function(url, prev, done) {
     url = url.replace(/^jspm:/, '')+'.scss';
 
     jspm.normalize(url).then(function(path) {
+    jspm.normalize(url).then(function(normalizedPath) {
         var stat;
         var parts;
 
-        path = path.replace(/file:\/\/(.*?)(\.js)?$/, '$1');
+        normalizedPath = normalizedPath.replace(/file:\/\/(.*?)(\.js)?$/, '$1');
         try {
-            stat = fs.statSync(path);
+            stat = fs.statSync(normalizedPath);
         } catch (e) {
             try {
-                parts = path.split('/');
+                parts = normalizedPath.split('/');
                 parts[parts.length - 1] = '_' + parts[parts.length - 1];
-                path = parts.join('/');
-                stat = fs.statSync(path);
+                normalizedPath = parts.join('/');
+                stat = fs.statSync(normalizedPath);
             } catch (e) {
                 return done();
             }
         }
         if(stat.isFile()) {
             done({
-                file: path
+                file: normalizedPath
             });
         } else {
             done();
