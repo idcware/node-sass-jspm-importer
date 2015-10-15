@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var sass = require('./sass');
 var jspm = require('jspm');
-var fromFileURL = require('./common').fromFileURL;
+var jspm_common = require('jspm/lib/common');
 
 
 module.exports = function(url, prev, done) {
@@ -14,11 +14,10 @@ module.exports = function(url, prev, done) {
     url = url.replace(/^jspm:/, '')+'.scss';
 
     jspm.normalize(url).then(function(filePath) {
-        console.log(url);
         var stat;
         var parts;
 
-        filePath = fromFileURL(filePath).replace(/\.js$/, '');
+        filePath = path.resolve(jspm_common.fromFileURL(filePath).replace(/\.js$/, ''));
         try {
             stat = fs.statSync(filePath);
         } catch (e) {

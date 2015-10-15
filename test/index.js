@@ -12,6 +12,12 @@ mockery.registerMock('jspm', {
     }
 });
 
+mockery.registerMock('jspm/lib/common', {
+    fromFileURL: function(path) {
+        return path.substr(7);
+    }
+});
+
 mockery.registerMock('jspm/lib/config', { // internal jspm api ?
     loadSync: function() {},
     pjson: {
