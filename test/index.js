@@ -2,6 +2,7 @@
 
 var mockery = require('mockery');
 var chai = require('chai');
+var path = require('path');
 var expect = chai.expect;
 var Q = require('q');
 var fs = require('fs');
@@ -9,6 +10,12 @@ var fs = require('fs');
 mockery.registerMock('jspm', {
     normalize: function(f) {
         return Q('file://test/'+f+'.js')
+    }
+});
+
+mockery.registerMock('jspm/lib/common', {
+    fromFileURL: function(path) {
+        return path.substr(7);
     }
 });
 
