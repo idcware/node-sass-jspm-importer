@@ -14,11 +14,10 @@ module.exports = function(url, prev, done) {
     url = url.replace(/^jspm:/, '')+'.scss';
 
     jspm.normalize(url).then(function(filePath) {
-        console.log(url);
         var stat;
         var parts;
 
-        filePath = fromFileURL(filePath).replace(/\.js$/, '');
+        filePath = path.resolve(fromFileURL(filePath).replace(/\.js$/, ''));
         try {
             stat = fs.statSync(filePath);
         } catch (e) {
