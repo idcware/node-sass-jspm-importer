@@ -13,7 +13,7 @@ module.exports.resolve_function = function(path_prefix) {
     return {
         'jspm_resolve($exp)': function(exp, done) {
             jspm.normalize(exp.getValue()).then(function(respath) {
-                respath = fromFileURL(respath).replace(/\.js$/, '');
+                respath = path.resolve(fromFileURL(respath).replace(/\.js$/, ''));
                 var res = path.join(path_prefix, path.relative(jspm_config.pjson.packages, respath))
                 done(new sass.types.String(res));
             }, function(e) {
