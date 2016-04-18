@@ -16,8 +16,11 @@ module.exports = function(url, prev, done) {
     jspm.normalize(url).then(function(filePath) {
         var stat;
         var parts;
+        var origFilePath;
 
-        filePath = path.resolve(fromFileURL(filePath).replace(/\.js$|\.ts$/, ''));
+        origFilePath = path.resolve(fromFileURL(filePath).replace(/\.js$/, ''));
+        filePath = origFilePath;
+
         try {
             stat = fs.statSync(filePath);
         } catch (e) {
@@ -27,7 +30,18 @@ module.exports = function(url, prev, done) {
                 filePath = parts.join(path.sep);
                 stat = fs.statSync(filePath);
             } catch (e) {
-                return done();
+                // Check if the file exists with a .css extension
+                filePath = origFilePath.replace(/\.scss$/, '.css');
+                try {
+                    stat = fs.statSync(filePath);
+                    // The file is there, with the .css extension.
+                    // Strip the .css from the filePath to have SASS build this into
+                    // the output. If we keep the .css extension here, it leaves it
+                    // a plain CSS @import for the browser to resolve.
+                    filePath = origFilePath.replace(/\.scss$/, '');
+                } catch (e) {
+                    return done();
+                }
             }
         }
         if(stat.isFile()) {
@@ -42,4 +56,3 @@ module.exports = function(url, prev, done) {
         done();
     });
 };
-
