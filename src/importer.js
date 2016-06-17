@@ -38,7 +38,7 @@ module.exports = function(url, prev, done) {
                     // Strip the .css from the filePath to have SASS build this into
                     // the output. If we keep the .css extension here, it leaves it
                     // a plain CSS @import for the browser to resolve.
-                    filePath = origFilePath.replace(/\.scss$/, '');
+                    filePath = filePath.replace(/\.css$/, '');
                 } catch (e) {
                     return done();
                 }
