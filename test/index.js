@@ -38,10 +38,12 @@ describe('sass-jspm-importer', function() {
             // cannot just mock fs since it uses libsass..
             fs.writeFileSync('test/fakefile.scss', '#id{display:block}');
             fs.writeFileSync('test/_fakepartial.scss', '#id{display:inline}');
+            fs.writeFileSync('test/fakecss.css', '#id{display:flex}');
         });
         afterEach(function() {
             fs.unlinkSync('test/fakefile.scss');
             fs.unlinkSync('test/_fakepartial.scss');
+            fs.unlinkSync('test/fakecss.css');
         });
         it('should import jspm files', function(done) {
             sass.render({
@@ -64,6 +66,18 @@ describe('sass-jspm-importer', function() {
                 if(err) throw err;
 
                 expect(result.css.toString()).to.equal('#id{display:inline}\n');
+                done();
+            });
+        });
+        it('should also accept css files', function(done) {
+            sass.render({
+                data: '@import "jspm:fakecss";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:flex}\n');
                 done();
             });
         });
