@@ -36,18 +36,22 @@ describe('sass-jspm-importer', function() {
     describe('importer', function() {
         beforeEach(function() {
             // cannot just mock fs since it uses libsass..
-            fs.writeFileSync('test/fakefile.scss', '#id{display:block}');
-            fs.writeFileSync('test/_fakepartial.scss', '#id{display:inline}');
-            fs.writeFileSync('test/fakecss.css', '#id{display:flex}');
+            fs.writeFileSync('test/fakeSCSSfile.scss', '#id{display:block}');
+            fs.writeFileSync('test/_fakeSCSSpartial.scss', '#id{display:inline}');
+            fs.writeFileSync('test/fakeCSS.css', '#id{display:flex}');
+            fs.writeFileSync('test/fakeSASSfile.sass', '#id\n  display: block');
+            fs.writeFileSync('test/_fakeSASSpartial.sass','#id\n  display: inline');
         });
         afterEach(function() {
-            fs.unlinkSync('test/fakefile.scss');
-            fs.unlinkSync('test/_fakepartial.scss');
-            fs.unlinkSync('test/fakecss.css');
+            fs.unlinkSync('test/fakeSCSSfile.scss');
+            fs.unlinkSync('test/_fakeSCSSpartial.scss');
+            fs.unlinkSync('test/fakeCSS.css');
+            fs.unlinkSync('test/fakeSASSfile.sass');
+            fs.unlinkSync('test/_fakeSASSpartial.sass');
         });
-        it('should import jspm files', function(done) {
+        it('should import scss jspm files', function(done) {
             sass.render({
-                data: '@import "jspm:fakefile";',
+                data: '@import "jspm:fakeSCSSfile";',
                 outputStyle: 'compressed',
                 importer: sassJspm.importer
             }, function(err, result) {
@@ -57,9 +61,9 @@ describe('sass-jspm-importer', function() {
                 done();
             });
         });
-        it('should import partials', function(done) {
+        it('should import scss partials', function(done) {
             sass.render({
-                data: '@import "jspm:fakepartial";',
+                data: '@import "jspm:fakeSCSSpartial";',
                 outputStyle: 'compressed',
                 importer: sassJspm.importer
             }, function(err, result) {
@@ -71,13 +75,37 @@ describe('sass-jspm-importer', function() {
         });
         it('should also accept css files', function(done) {
             sass.render({
-                data: '@import "jspm:fakecss";',
+                data: '@import "jspm:fakeCSS";',
                 outputStyle: 'compressed',
                 importer: sassJspm.importer
             }, function(err, result) {
                 if(err) throw err;
 
                 expect(result.css.toString()).to.equal('#id{display:flex}\n');
+                done();
+            });
+        });
+        it('should import sass jspm files', function(done) {
+            sass.render({
+                data: '@import "jspm:fakeSASSfile";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:block}\n');
+                done();
+            });
+        });
+        it('should import sass partials', function(done) {
+            sass.render({
+                data: '@import "jspm:fakeSASSpartial";',
+                outputStyle: 'compressed',
+                importer: sassJspm.importer
+            }, function(err, result) {
+                if(err) throw err;
+
+                expect(result.css.toString()).to.equal('#id{display:inline}\n');
                 done();
             });
         });
